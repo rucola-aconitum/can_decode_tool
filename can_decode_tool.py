@@ -10,10 +10,13 @@ def main():
 	db = cantools.db.load_file(dbc_filename)
 
 	with can.BLFReader(blf_filename) as can_log:
-		for msg in can_log:
-			#decoded_msg.append(db.decode_message(msg.arbitration_id, msg.data))
-			add_msg = pd.DataFrame(data = db.decode_message(msg.arbitration_id, msg.data))
-			decoded_msg = decoded_msg.append(data = add_msg)
+		try:
+			for msg in can_log:
+				#decoded_msg.append(db.decode_message(msg.arbitration_id, msg.data))
+				add_msg = pd.DataFrame(data = db.decode_message(msg.arbitration_id, msg.data))
+				decoded_msg = decoded_msg.append(data = add_msg)
+		except:
+			pass
 	return
 
 if __name__ == '__main__':
